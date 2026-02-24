@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>World of Data Dashboard - Arvish</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar card">
+      <div>
+        <h1>World of Data</h1>
+        <p class="subtitle">
+          Interactive exploration of country-level indicators (Our World in Data)
+        </p>
+      </div>
+
+      <div class="meta">
+        <div><strong>Name:</strong> Arvish Pandey</div>
+        <div><strong>Source:</strong> Our World in Data</div>
+        <div><strong>Year(s):</strong> <span id="year-label">Loading...</span></div>
+      </div>
+    </header>
+
+    <section class="controls card">
+      <div class="control-group">
+        <label for="metricX">Metric X</label>
+        <select id="metricX"></select>
+      </div>
+
+      <div class="control-group">
+        <label for="metricY">Metric Y</label>
+        <select id="metricY"></select>
+      </div>
+
+      <div class="control-group">
+        <label for="mapMetric">Map Metric</label>
+        <select id="mapMetric"></select>
+      </div>
+
+      <div class="control-group">
+        <button id="resetSelection">Reset Selection</button>
+      </div>
+    </section>
+
+    <main class="dashboard-grid">
+      <section class="panel card" id="map-panel">
+        <div class="panel-header">
+          <h2>World Map</h2>
+          <p class="panel-note">Hover for country details</p>
+        </div>
+        <div id="map"></div>
+      </section>
+
+      <section class="panel card" id="scatter-panel">
+        <div class="panel-header">
+          <h2>Correlation View</h2>
+          <p class="panel-note">Brush to select countries</p>
+        </div>
+        <div id="scatter"></div>
+      </section>
+
+      <section class="panel card" id="hist-x-panel">
+        <div class="panel-header">
+          <h2>Distribution: Metric X</h2>
+        </div>
+        <div id="histX"></div>
+      </section>
+
+      <section class="panel card" id="hist-y-panel">
+        <div class="panel-header">
+          <h2>Distribution: Metric Y</h2>
+        </div>
+        <div id="histY"></div>
+      </section>
+
+      <section class="panel card" id="details-panel">
+        <div class="panel-header">
+          <h2>Details / Insights</h2>
+        </div>
+        <div id="details">
+          <p class="muted">Hover or select countries to see details here.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="tooltip" class="tooltip hidden"></div>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
