@@ -9,7 +9,6 @@ const METRIC_META = [
   { value: "pm25", label: "PM2.5 air pollution", format: d3.format(".1f") },
   { value: "undernourishment", label: "Undernourishment (%)", format: d3.format(".1f") },
   { value: "gdp_per_capita", label: "GDP per capita", format: d3.format(",.0f") },
-  // Optional later if added to CSV:
   // { value: "obesity_prevalence", label: "Obesity prevalence (%)", format: d3.format(".1f") },
 ];
 
@@ -202,7 +201,7 @@ function renderMap() {
       hideTooltip();
     });
 
-  // simple legend
+  // legend
   const legendW = 180, legendH = 10;
   const legendX = 14, legendY = height - 28;
   const defs = svg.append("defs");
@@ -321,7 +320,7 @@ function renderScatter() {
     .attr("font-size", 12)
     .text(yMeta.label);
 
-  // brush
+  // brush+drag
   const brush = d3.brush()
     .extent([[0, 0], [innerW, innerH]])
     .on("end", (event) => {
@@ -412,7 +411,7 @@ function renderAll() {
   renderHistogram("#histY", state.metricY);
   updateDetailsPanel();
 
-  // update panel titles dynamically (nice polish)
+  // update panel titles dynamically (nice polish!)
   const xLabel = metricMeta(state.metricX).label;
   const yLabel = metricMeta(state.metricY).label;
   const xTitle = document.querySelector("#hist-x-panel .panel-header h2");
@@ -427,7 +426,6 @@ async function loadData() {
     d3.json(GEOJSON_URL)
   ]);
 
-  // normalize keys
   state.data = rows
     .map((d) => ({
       country: d.country ?? d.Entity ?? d.entity,
@@ -446,7 +444,6 @@ async function loadData() {
     state.data.some((d) => Number.isFinite(d[m.value]))
   );
 
-  // set year label (assume one shared year in merged file)
   const years = [...new Set(state.data.map((d) => d.year).filter((v) => v != null))];
   state.yearLabel = years.length === 1 ? String(years[0]) : years.join(", ");
   document.getElementById("year-label").textContent = state.yearLabel;

@@ -17,9 +17,9 @@ ID_COLS = {"Entity", "Code", "Year"}
 
 
 def find_value_column(df: pd.DataFrame) -> str:
-    # pick first numeric-ish column that is not an id column
+    
     candidates = [c for c in df.columns if c not in ID_COLS]
-    # prefer columns with numbers
+
     best_col = None
     best_non_null = -1
     for c in candidates:
@@ -46,14 +46,12 @@ def clean_metric_csv(path: Path, metric_name: str) -> pd.DataFrame:
     df = df[["Entity", "Code", "Year", value_col]].copy()
     df.rename(columns={value_col: metric_name}, inplace=True)
 
-    # numeric coercion
     df["Year"] = pd.to_numeric(df["Year"], errors="coerce").astype("Int64")
     df[metric_name] = pd.to_numeric(df[metric_name], errors="coerce")
 
-    # keep likely country rows: ISO3 uppercase codes only (filters out OWID_* aggregates)
     df = df[df["Code"].astype(str).str.fullmatch(r"[A-Z]{3}", na=False)]
 
-    # drop nulls
+    # drop blanks
     df = df.dropna(subset=["Year", metric_name])
 
     # keep one row per country/year (if duplicates exist, keep last)
@@ -64,7 +62,6 @@ def clean_metric_csv(path: Path, metric_name: str) -> pd.DataFrame:
 
 
 def choose_best_common_year(metric_dfs: dict) -> int:
-    # years present in all metrics
     common_years = None
     for name, df in metric_dfs.items():
         years = set(df["Year"].dropna().astype(int).unique().tolist())
@@ -84,7 +81,6 @@ def choose_best_common_year(metric_dfs: dict) -> int:
                 merged = merged.merge(d[["Code", "Year", name]], on=["Code", "Year"], how="inner")
         scores.append((y, len(merged)))
 
-    # choose highest coverage; tie-break by latest year
     scores_sorted = sorted(scores, key=lambda t: (t[1], t[0]), reverse=True)
     best_year, best_count = scores_sorted[0]
 
@@ -113,10 +109,8 @@ def main():
         else:
             merged = merged.merge(d[["Code", "Year", name]], on=["Code", "Year"], how="inner")
 
-    # rename Entity to country for convenience
     merged = merged.rename(columns={"Entity": "country", "Code": "code", "Year": "year"})
 
-    # optional derived helpers (nice for tooltips/sorting)
     if "gdp_per_capita" in merged.columns:
         merged["log_gdp_per_capita"] = pd.to_numeric(merged["gdp_per_capita"], errors="coerce").apply(
             lambda x: None if pd.isna(x) or x <= 0 else __import__("math").log10(x)
