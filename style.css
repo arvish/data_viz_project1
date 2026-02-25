@@ -34,10 +34,10 @@ body {
 } */
 
 .app-shell {
-  width: min(1920px, 99vw);
-  margin: 10px auto 14px;
+  width: min(1800px, 98vw);
+  margin: 12px auto 18px;
   display: grid;
-  gap: 12px;
+  gap: 14px;
 }
 
 .card {
@@ -119,9 +119,9 @@ button:hover { border-color: rgba(103,232,249,0.5); }
 
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 1.15fr 1.35fr 1fr;
+  grid-template-columns: 1.25fr 1.45fr 1fr;
   grid-template-rows: auto auto auto;
-  gap: 12px;
+  gap: 14px;
   align-items: stretch;
 }
 
@@ -166,6 +166,7 @@ button:hover { border-color: rgba(103,232,249,0.5); }
 #hist-x-panel { grid-column: 3 / 4; grid-row: 1 / 2; }
 #hist-y-panel { grid-column: 3 / 4; grid-row: 2 / 3; }
 #details-panel { grid-column: 1 / 4; grid-row: 3 / 4; }
+
 
 #map-panel,
 #scatter-panel {
