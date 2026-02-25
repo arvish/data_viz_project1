@@ -2,16 +2,15 @@ import pandas as pd
 import re
 from pathlib import Path
 
-RAW_DIR = Path("data/raw")
-OUT_FILE = Path("data/world_metrics_merged.csv")
+BASE_DIR = Path(__file__).resolve().parents[1]
+RAW_DIR = BASE_DIR / "data" / "raw"
+OUT_FILE = BASE_DIR / "data" / "world_metrics_merged.csv"
 
 FILES = {
-    "life_expectancy": RAW_DIR / "life_expectancy.csv",
-    "pm25": RAW_DIR / "pm25_air_pollution.csv",
-    "undernourishment": RAW_DIR / "undernourishment.csv",
-    "gdp_per_capita": RAW_DIR / "gdp_per_capita.csv",
-    # Optional later:
-    # "obesity_prevalence": RAW_DIR / "obesity_prevalence.csv",
+    "life_expectancy": RAW_DIR / "life-expectancy.csv",
+    "pm25": RAW_DIR / "pm25-air-pollution.csv",
+    "undernourishment": RAW_DIR / "prevalence-of-undernourishment.csv",
+    "gdp_per_capita": RAW_DIR / "gdp-per-capita-maddison-project-database.csv",
 }
 
 ID_COLS = {"Entity", "Code", "Year"}
