@@ -1,4 +1,4 @@
-# 🌍 Food, Environment & Longevity: A Global Exploration Dashboard
+# Project 1 - Our World in Data
 
 **Author:** Arvish Pandey  
 **Course Project:** Data Visualization (D3.js / HTML / CSS / JavaScript)  
